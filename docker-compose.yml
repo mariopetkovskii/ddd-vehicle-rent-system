@@ -1,0 +1,21 @@
+version: "3"
+services:
+  vehicle-db:
+    image: "postgres"
+    container_name: "db-vehicle"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=vehicle-db
+    ports:
+      - "5432:5432"
+  rent-management-db:
+    image: "postgres"
+    container_name: "db-rent-management"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=rent-db
+    ports:
+      - "5433:5432"
+
