@@ -27,4 +27,12 @@ public class Money implements ValueObject {
     public Money subtract(Money money){
         return new Money(amount - money.amount);
     }
+
+    public Money multiply(int m){
+        return new Money(amount * m);
+    }
+
+    public static Money valueOf(double amount){
+        return new Money(amount);
+    }
 }
