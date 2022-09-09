@@ -3,14 +3,19 @@ package ddd.vehiclelist.service;
 import ddd.vehiclelist.domain.models.Vehicle;
 import ddd.vehiclelist.domain.models.VehicleId;
 import ddd.vehiclelist.service.form.VehicleForm;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface VehicleService {
 
     Vehicle findById(VehicleId vehicleId);
-    Vehicle createVehicle(VehicleForm form);
+    Optional<Vehicle> createVehicle(VehicleForm form);
     Vehicle vehicleItemCreated(VehicleId vehicleId);
     Vehicle vehicleItemRemoved(VehicleId vehicleId);
     List<Vehicle> findAll();
+
+    Page<Vehicle> findAllWithPagination(Pageable pageable);
 }

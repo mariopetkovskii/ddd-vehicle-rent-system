@@ -34,6 +34,10 @@ public class RentVehicle extends AbstractEntity<RentVehicleId> {
         this.daysRent = daysRent;
     }
 
+    public RentVehicle(){
+        super(DomainObjectId.randomId(RentVehicleId.class));
+    }
+
     public Money subtotal(){
         return rentPrice.multiply(daysRent.intValue());
     }

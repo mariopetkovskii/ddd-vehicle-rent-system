@@ -8,7 +8,7 @@ import javax.persistence.Embeddable;
 
 @Embeddable
 public class VehicleId extends DomainObjectId {
-    private VehicleId(){
+    public VehicleId(){
         super(VehicleId.randomId(VehicleId.class).getId());
     }
 
