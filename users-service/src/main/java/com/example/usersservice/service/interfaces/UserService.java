@@ -1,5 +1,6 @@
 package com.example.usersservice.service.interfaces;
 
+import com.example.usersservice.domain.dto.UserEmailDto;
 import com.example.usersservice.domain.dto.UserRegisterDto;
 import com.example.usersservice.domain.models.User;
 
@@ -18,6 +19,8 @@ public interface UserService {
     void deleteUserByEmail(String email);
 
     Optional<User> register(UserRegisterDto userRegisterDto);
+
+    Optional<User> details(UserEmailDto userEmailDto);
 
 
 }

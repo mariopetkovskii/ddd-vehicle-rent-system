@@ -1,5 +1,7 @@
 package com.example.usersservice.xport.rest;
 
+import com.example.usersservice.domain.dto.UserEmailDto;
+import com.example.usersservice.domain.dto.UserInfoDto;
 import com.example.usersservice.domain.dto.UserRegisterDto;
 import com.example.usersservice.domain.models.User;
 import com.example.usersservice.service.interfaces.UserService;
@@ -27,5 +29,19 @@ public class UserController {
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public List<User> listAll(){
         return this.userService.findAll();
+    }
+
+    @PostMapping("/details")
+    public ResponseEntity<UserInfoDto> userDetails(@RequestBody UserEmailDto userEmailDto){
+        return this.userService.details(userEmailDto)
+                .map(user -> {
+                    UserInfoDto userInfoDto = new UserInfoDto();
+                    userInfoDto.setEmail(user.getEmail());
+                    userInfoDto.setFirstName(user.getFirstName());
+                    userInfoDto.setLastName(user.getLastName());
+                    userInfoDto.setId(user.getId().getId());
+                    return ResponseEntity.ok().body(userInfoDto);
+                })
+                .orElseGet(() -> ResponseEntity.badRequest().build());
     }
 }

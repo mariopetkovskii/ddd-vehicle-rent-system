@@ -60,7 +60,7 @@ function VehicleAddModal(props) {
             >
                 <h2>Add Vehicle</h2>
 
-                <div className="form">
+                <div className="form mw-50 p-3">
                     <div className="form-body">
                         <form onSubmit={onFormSubmit}>
                             <div className="form-group">

@@ -17,7 +17,6 @@ import java.util.Optional;
 @AllArgsConstructor
 public class RentController {
     private final VehicleClient vehicleClient;
-
     private final RentService rentService;
 
     @GetMapping

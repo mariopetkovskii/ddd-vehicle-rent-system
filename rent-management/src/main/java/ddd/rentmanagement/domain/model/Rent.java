@@ -21,9 +21,17 @@ public class Rent extends AbstractEntity<RentId> {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<RentVehicle> rentVehicleSet;
 
+    private String userId;
+
     public Rent() {
         super(RentId.randomId(RentId.class));
         this.rentVehicleSet = new HashSet<>();
+    }
+
+    public Rent(String userId){
+        super(RentId.randomId(RentId.class));
+        this.rentVehicleSet = new HashSet<>();
+        this.userId = userId;
     }
 
     public Money total(){

@@ -1,5 +1,6 @@
 package com.example.usersservice.service.impl;
 
+import com.example.usersservice.domain.dto.UserEmailDto;
 import com.example.usersservice.domain.dto.UserRegisterDto;
 import com.example.usersservice.domain.exceptions.PasswordsDoNotMatchException;
 import com.example.usersservice.domain.exceptions.UserAlreadyExistsException;
@@ -62,5 +63,10 @@ public class UserServiceImpl implements UserService {
                 passwordEncoder.encode(userRegisterDto.getPassword()));
         this.userRepository.save(newUser);
         return Optional.of(newUser);
+    }
+
+    @Override
+    public Optional<User> details(UserEmailDto userEmailDto) {
+        return Optional.of(this.userRepository.findByEmail(userEmailDto.getEmail()));
     }
 }

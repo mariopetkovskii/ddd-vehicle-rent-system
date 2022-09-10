@@ -30,7 +30,6 @@ public class RentServiceImpl implements RentService {
 
     private final RentRepository rentRepository;
     private final Validator validator;
-
     private final VehicleClient vehicleClient;
 
     @Override
