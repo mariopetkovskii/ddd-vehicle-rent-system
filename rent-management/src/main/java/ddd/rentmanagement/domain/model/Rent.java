@@ -19,8 +19,6 @@ public class Rent extends AbstractEntity<RentId> {
 
     private Instant rentedOn;
 
-    private Number daysRent;
-
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<RentVehicle> rentVehicleSet;
 

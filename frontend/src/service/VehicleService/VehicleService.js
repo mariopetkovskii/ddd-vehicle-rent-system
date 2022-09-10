@@ -6,8 +6,8 @@ const vehicleService = {
         return vehicleRepository.listAll();
     },
 
-    addVehicle: (name, brand, amount, type, numOfRents) => {
-        return vehicleRepository.addVehicle(name, brand, amount, type, numOfRents)
+    addVehicle: (name, brand, amount, type) => {
+        return vehicleRepository.addVehicle(name, brand, amount, type)
     }
 
 }

@@ -13,6 +13,5 @@ public class VehicleForm {
     private Brand brand;
     private Money price;
     private Type type;
-    private int numOfRents;
 
 }

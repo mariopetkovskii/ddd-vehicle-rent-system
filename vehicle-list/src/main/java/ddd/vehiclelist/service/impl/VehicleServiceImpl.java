@@ -1,6 +1,7 @@
 package ddd.vehiclelist.service.impl;
 
 import ddd.vehiclelist.domain.VehicleRepository;
+import ddd.vehiclelist.domain.dto.VehicleIdDto;
 import ddd.vehiclelist.domain.exceptions.VehicleNotFoundException;
 import ddd.vehiclelist.domain.models.Vehicle;
 import ddd.vehiclelist.domain.models.VehicleId;
@@ -29,7 +30,7 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Override
     public Optional<Vehicle> createVehicle(VehicleForm form) {
-        Vehicle vehicle = Vehicle.build(form.getName(), form.getBrand(), form.getPrice(), form.getType(), form.getNumOfRents());
+        Vehicle vehicle = Vehicle.build(form.getName(), form.getBrand(), form.getPrice(), form.getType());
         vehicleRepository.save(vehicle);
         return Optional.of(vehicle);
     }
@@ -58,5 +59,13 @@ public class VehicleServiceImpl implements VehicleService {
     @Override
     public Page<Vehicle> findAllWithPagination(Pageable pageable) {
         return this.vehicleRepository.findAll(pageable);
+    }
+
+    @Override
+    public Optional<Vehicle> getVehicle(VehicleIdDto vehicleIdDto) {
+        Vehicle vehicle = this.vehicleRepository.
+                findById(VehicleId.of(vehicleIdDto.getId())).
+                orElseThrow(VehicleNotFoundException::new);
+        return Optional.of(vehicle);
     }
 }

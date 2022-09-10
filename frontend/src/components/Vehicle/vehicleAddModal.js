@@ -29,8 +29,7 @@ function VehicleAddModal(props) {
         name: "",
         brand: "",
         price: 0,
-        type: "CAR",
-        numOfRents: 0
+        type: "CAR"
     })
 
     const handleChange = (e) => {
@@ -46,8 +45,7 @@ function VehicleAddModal(props) {
         const brand = formData.brand;
         const price = formData.price;
         const type = formData.type;
-        const numOfRents = formData.numOfRents;
-        props.onAddVehicle(name, brand, price, type, numOfRents);
+        props.onAddVehicle(name, brand, price, type);
     }
 
 
@@ -100,15 +98,6 @@ function VehicleAddModal(props) {
                                        name="type"
                                        required
                                        placeholder="Enter type"
-                                       onChange={handleChange}
-                                />
-                                <label htmlFor="numOfRents">Number of Rents</label>
-                                <input type="number"
-                                       className="form-control"
-                                       id="numOfRents"
-                                       name="numOfRents"
-                                       required
-                                       placeholder="Enter number of Rents"
                                        onChange={handleChange}
                                 />
                             </div>

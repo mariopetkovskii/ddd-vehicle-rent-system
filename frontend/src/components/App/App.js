@@ -33,8 +33,8 @@ class App extends Component {
             });
     }
 
-    addVehicle = (name, brand, price, type, numOfRents) => {
-        vehicleService.addVehicle(name, brand, price, type, numOfRents)
+    addVehicle = (name, brand, price, type) => {
+        vehicleService.addVehicle(name, brand, price, type)
             .then(() => {
                 window.location.href = "/vehicles"
             })
