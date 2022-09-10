@@ -38,11 +38,11 @@ public class Vehicle extends AbstractEntity<VehicleId> {
     }
 
     public void addRent(){
-        this.numOfRents += 1;
+        this.numOfRents -= 1;
     }
 
     public void removeRent(){
-        this.numOfRents -= 1;
+        this.numOfRents += 1;
     }
 
 

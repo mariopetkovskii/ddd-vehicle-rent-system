@@ -45,4 +45,18 @@ public class VehicleController {
                 .map(vehicle -> ResponseEntity.ok().body(vehicle))
                 .orElseGet(() -> ResponseEntity.badRequest().build());
     }
+
+//    @PostMapping(value = "/rent")
+//    public ResponseEntity<Vehicle> rentVehicle(@RequestBody VehicleIdDto vehicleIdDto){
+//        return this.vehicleService.rentVehicle(vehicleIdDto)
+//                .map(vehicle -> ResponseEntity.ok().body(vehicle))
+//                .orElseGet(() -> ResponseEntity.badRequest().build());
+//    }
+//
+//    @PostMapping(value = "/unRent")
+//    public ResponseEntity<Vehicle> unRentVehicle(@RequestBody VehicleIdDto vehicleIdDto){
+//        return this.vehicleService.unRentVehicle(vehicleIdDto)
+//                .map(vehicle -> ResponseEntity.ok().body(vehicle))
+//                .orElseGet(() -> ResponseEntity.badRequest().build());
+//    }
 }

@@ -14,5 +14,5 @@ public class RentVehicleForm {
     private Vehicle vehicle;
 
     @Min(1)
-    private int rentDays = 1;
+    private int daysRent = 1;
 }

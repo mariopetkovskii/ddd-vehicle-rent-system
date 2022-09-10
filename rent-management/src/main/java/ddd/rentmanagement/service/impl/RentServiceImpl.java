@@ -1,6 +1,8 @@
 package ddd.rentmanagement.service.impl;
 
+import ddd.rentmanagement.domain.dto.UserIdDto;
 import ddd.rentmanagement.domain.dto.VehicleIdDto;
+import ddd.rentmanagement.domain.dto.VehicleUserIdsDto;
 import ddd.rentmanagement.domain.exceptions.RentIdNotExistException;
 import ddd.rentmanagement.domain.exceptions.RentVehicleIdNotExistException;
 import ddd.rentmanagement.domain.model.Rent;
@@ -56,7 +58,7 @@ public class RentServiceImpl implements RentService {
     @Override
     public void addVehicle(RentId rentId, RentVehicleForm rentVehicleForm) throws RentIdNotExistException {
         Rent rent = this.rentRepository.findById(rentId).orElseThrow(RentIdNotExistException::new);
-        rent.addVehicle(rentVehicleForm.getVehicle(), rentVehicleForm.getRentDays());
+        rent.addVehicle(rentVehicleForm.getVehicle(), rentVehicleForm.getDaysRent());
         this.rentRepository.saveAndFlush(rent);
     }
 
@@ -68,13 +70,14 @@ public class RentServiceImpl implements RentService {
     }
 
     @Override
-    public Optional<String> rentVehicle(VehicleIdDto vehicleIdDto) {
+    public Optional<String> rentVehicle(VehicleUserIdsDto vehicleUserIdsDto) {
         RentVehicleForm rentVehicleForm = new RentVehicleForm();
-        rentVehicleForm.setVehicle(vehicleClient.getVehicleWithGivenId(vehicleIdDto.getId()));
-        rentVehicleForm.setRentDays(2);
+        rentVehicleForm.setVehicle(vehicleClient.getVehicleWithGivenId(vehicleUserIdsDto.getVehicleId()));
+        rentVehicleForm.setDaysRent(2);
 
         RentForm rentForm = new RentForm();
         rentForm.setItems(List.of(rentVehicleForm));
+        rentForm.setUserId(vehicleUserIdsDto.getUserId());
 
         RentId rentId = this.rent(rentForm);
         Rent rent = findById(rentId).orElseThrow(RentIdNotExistException::new);
@@ -82,8 +85,8 @@ public class RentServiceImpl implements RentService {
     }
 
     private Rent toRentObject(RentForm rentForm){
-        var rent = new Rent();
-        rentForm.getItems().forEach(item -> rent.addVehicle(item.getVehicle(), item.getRentDays()));
+        var rent = new Rent(rentForm.getUserId());
+        rentForm.getItems().forEach(item -> rent.addVehicle(item.getVehicle(), item.getDaysRent()));
         return rent;
     }
 }

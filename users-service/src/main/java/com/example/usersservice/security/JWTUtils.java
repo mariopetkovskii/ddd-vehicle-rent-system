@@ -50,6 +50,7 @@ public class JWTUtils {
         this.userService.save(user);
         String token = JWT.create()
                 .withSubject(userDetails.getUsername())
+                .withClaim("id", user.getId().getId())
                 .withClaim("firstName", user.getFirstName())
                 .withClaim("lastName", user.getLastName())
                 .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRATION_TIME))

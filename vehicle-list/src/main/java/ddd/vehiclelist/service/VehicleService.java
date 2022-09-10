@@ -17,6 +17,10 @@ public interface VehicleService {
     Vehicle vehicleItemRemoved(VehicleId vehicleId);
     List<Vehicle> findAll();
     Page<Vehicle> findAllWithPagination(Pageable pageable);
-
     Optional <Vehicle> getVehicle(VehicleIdDto vehicleIdDto);
+
+    Optional<Vehicle> rentVehicle(VehicleIdDto vehicleIdDto);
+
+    Optional<Vehicle> unRentVehicle(VehicleIdDto vehicleIdDto);
+
 }

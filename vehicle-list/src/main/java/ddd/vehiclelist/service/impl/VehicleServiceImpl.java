@@ -68,4 +68,29 @@ public class VehicleServiceImpl implements VehicleService {
                 orElseThrow(VehicleNotFoundException::new);
         return Optional.of(vehicle);
     }
+
+    @Override
+    public Optional<Vehicle> rentVehicle(VehicleIdDto vehicleIdDto) {
+        Vehicle vehicle = this.vehicleRepository.
+                findById(VehicleId.of(vehicleIdDto.getId())).
+                orElseThrow(VehicleNotFoundException::new);
+        if(vehicle.getNumOfRents() == 0){
+            throw new VehicleNotFoundException();
+        }else{
+            vehicle.addRent();
+            this.vehicleRepository.save(vehicle);
+        }
+        return Optional.of(vehicle);
+    }
+
+    @Override
+    public Optional<Vehicle> unRentVehicle(VehicleIdDto vehicleIdDto) {
+        Vehicle vehicle = this.vehicleRepository.
+                findById(VehicleId.of(vehicleIdDto.getId())).
+                orElseThrow(VehicleNotFoundException::new);
+        vehicle.removeRent();
+        return Optional.of(vehicle);
+    }
+
+
 }

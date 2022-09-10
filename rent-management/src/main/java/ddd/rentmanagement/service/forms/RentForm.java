@@ -12,6 +12,8 @@ import java.util.List;
 @Data
 public class RentForm {
 
+    private String userId;
+
     @Valid
     @NotEmpty
     private List<RentVehicleForm> items = new ArrayList<>();
