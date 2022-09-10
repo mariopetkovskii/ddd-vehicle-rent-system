@@ -13,6 +13,8 @@ import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "vehicle_rent")
@@ -27,11 +29,15 @@ public class RentVehicle extends AbstractEntity<RentVehicleId> {
     @AttributeOverride(name = "id", column = @Column(name="vehicle_id", nullable = false))
     private VehicleId vehicleId;
 
+
+    private Instant rentedOn;
+
     public RentVehicle(@NonNull VehicleId vehicleId, @NonNull Money rentPrice, Number daysRent){
         super(DomainObjectId.randomId(RentVehicleId.class));
         this.vehicleId = vehicleId;
         this.rentPrice = rentPrice;
         this.daysRent = daysRent;
+        this.rentedOn = Instant.now();
     }
 
     public RentVehicle(){

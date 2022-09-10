@@ -9,6 +9,7 @@ import lombok.NonNull;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -17,18 +18,12 @@ import java.util.Set;
 @Getter
 public class Rent extends AbstractEntity<RentId> {
 
-    private Instant rentedOn;
-
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<RentVehicle> rentVehicleSet;
 
-    public Rent(Instant rentedOn){
-        super(RentId.randomId(RentId.class));
-        this.rentedOn = rentedOn;
-    }
-
     public Rent() {
         super(RentId.randomId(RentId.class));
+        this.rentVehicleSet = new HashSet<>();
     }
 
     public Money total(){

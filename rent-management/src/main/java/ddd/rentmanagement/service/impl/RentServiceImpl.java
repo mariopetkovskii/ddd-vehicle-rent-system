@@ -83,7 +83,7 @@ public class RentServiceImpl implements RentService {
     }
 
     private Rent toRentObject(RentForm rentForm){
-        var rent = new Rent(Instant.now());
+        var rent = new Rent();
         rentForm.getItems().forEach(item -> rent.addVehicle(item.getVehicle(), item.getRentDays()));
         return rent;
     }

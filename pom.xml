@@ -17,6 +17,7 @@
         <module>shared-kernel</module>
         <module>vehicle-list</module>
         <module>rent-management</module>
+        <module>users-service</module>
     </modules>
 
 </project>
