@@ -19,6 +19,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/rest/rent")
 @AllArgsConstructor
+@CrossOrigin("http://localhost:3000/")
 public class RentController {
     private final VehicleClient vehicleClient;
     private final RentService rentService;

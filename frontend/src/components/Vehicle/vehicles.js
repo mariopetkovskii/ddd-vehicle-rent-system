@@ -9,10 +9,20 @@ const Vehicle = (props) => {
 
     const [openModal, setOpenedModal] = useState(null);
     const [modalIsOpen, setIsOpen] = React.useState(false);
+    const [selectedRow, setSelectedRow] = useState(null);
+    const [errorMessage, updateErrorMessage] = React.useState()
+
 
     function openModalAddVehicle(addVehicleModal) {
         setOpenedModal(addVehicleModal)
         setIsOpen(true)
+    }
+
+    function openFromParent(rowData) {
+        setSelectedRow(rowData)
+        setIsOpen(true);
+        props.onRent(rowData.id)
+        console.log(rowData.id)
     }
 
     function handleCloseModal() {
@@ -94,18 +104,25 @@ const Vehicle = (props) => {
                                 width: "7vh",
                             },
                             rowStyle: rowData => ({
-                                // backgroundColor:
-                                // selectedRow === rowData.tableData.id ? '#67aeae' : '#FFF',
+                                backgroundColor:
+                                    selectedRow === rowData.tableData.id ? '#67aeae' : '#FFF',
                                 maxHeight: "11vh",
                                 height: "11vh",
                                 maxWidth: "7vh",
                                 width: "7vh"
                             })
                         }}
+                        actions= {[
+                            {
+                                icon: ()  => <button  className={"btn btn-warning"}>Details</button>,
+                                tooltip: 'Open Details',
+                                onClick: (event, rowData) => openFromParent(rowData)
+                            }]
+                        }
 
                     />
                 </div>
-
+                {errorMessage}
             </div>
         </div>
     );

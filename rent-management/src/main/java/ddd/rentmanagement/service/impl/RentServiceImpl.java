@@ -92,11 +92,13 @@ public class RentServiceImpl implements RentService {
 
         RentForm rentForm = new RentForm();
         rentForm.setItems(List.of(rentVehicleForm));
-        User user = this.userClient.getUserWithGivenId(vehicleUserIdsDto.getUserId());
-        if(user.getAmount().getAmount() < rentVehicleForm.getVehicle().getPrice().getAmount()){
+        User user = this.userClient.userDetails(vehicleUserIdsDto.getEmail());
+        if(user.getMoney().getAmount() < rentVehicleForm.getVehicle().getPrice().getAmount()){
             throw new UserNotEnoughMoneyException();
         }
-        rentForm.setUserId(vehicleUserIdsDto.getUserId());
+
+        System.out.println(user.getLastName());
+        rentForm.setUserId(user.getId().getId());
 
 
         RentId rentId = this.rent(rentForm);

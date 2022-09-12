@@ -33,4 +33,10 @@ public class UserClient {
         map.put("id", uuid);
         return restTemplate.postForObject(uri().path("/rest/user/detailsWithId").build().toUri(), map, User.class);
     }
+
+    public User userDetails(String email){
+        Map<String, String> map = new HashMap<>();
+        map.put("email", email);
+        return restTemplate.postForObject(uri().path("/rest/user/details").build().toUri(), map, User.class);
+    }
 }

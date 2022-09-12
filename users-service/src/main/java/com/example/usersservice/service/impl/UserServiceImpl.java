@@ -77,7 +77,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> addMoneyToUser(AddMoneyDto addMoneyDto) {
         User user = this.userRepository.findByEmail(addMoneyDto.getEmail());
-        user.setMoney(new Money(addMoneyDto.getAmount()));
+        user.setMoney(new Money(addMoneyDto.getAmount() + user.getMoney().getAmount()));
         return Optional.of(this.userRepository.save(user));
     }
 

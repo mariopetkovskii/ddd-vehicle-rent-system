@@ -15,7 +15,7 @@ public class User {
 
     private final String lastName;
 
-    private final Money amount;
+    private final Money money;
 
     private final Integer numOfRents;
 
@@ -24,7 +24,7 @@ public class User {
         this.email = "";
         this.firstName = "";
         this.lastName = "";
-        this.amount = Money.valueOf(0);
+        this.money = Money.valueOf(0);
         this.numOfRents = 0;
     }
 
@@ -34,13 +34,13 @@ public class User {
             @JsonProperty("email") String email,
             @JsonProperty("firstName") String firstName,
             @JsonProperty("lastName") String lastName,
-            @JsonProperty("amount") Money amount,
+            @JsonProperty("amount") Money money,
             @JsonProperty("numOfRents") Integer numOfRents) {
         this.id = id;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.amount = amount;
+        this.money = money;
         this.numOfRents = numOfRents;
     }
 }

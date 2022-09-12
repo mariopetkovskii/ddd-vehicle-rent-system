@@ -18,6 +18,14 @@ const userService = {
 
     logout: () => {
         userRepository.logout();
+    },
+
+    userDetails: () => {
+        return userRepository.userDetails();
+    },
+
+    addMoney: (amount) => {
+        return userRepository.addMoney(amount);
     }
 
 }

@@ -7,13 +7,17 @@ import Vehicle from "../Vehicle/vehicles";
 import Registration from "../Auth/Register";
 import userService from "../../service/UserService/userService";
 import Login from "../Auth/Login";
+import rentService from "../../service/RentService/rentService";
+import Account from "../Account/account";
+import AddMoney from "../Account/add-money";
 
 class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
             vehicles: [],
-            isUserLoggedIn: userService.checkIfUserLoggedIn()
+            isUserLoggedIn: userService.checkIfUserLoggedIn(),
+            userDetails: []
         }
     }
 
@@ -24,9 +28,11 @@ class App extends Component {
                         logout={this.logout}/>
                 <div className={"container"}>
                     <Routes>
-                        <Route path={"/vehicles"} exact element={<Vehicle onAddVehicle={this.addVehicle}/>}/>
+                        <Route path={"/vehicles"} exact element={<Vehicle onAddVehicle={this.addVehicle} onRent={this.rentVehicle}/>}/>
                         <Route path={"/register"} exact element={<Registration onRegister={this.register}/>}/>
                         <Route path={"/login"} exact element={<Login onLogin={this.login}/>}/>
+                        <Route path={"/account"} exact element={<Account userDetails={this.state.userDetails}/>}/>
+                        <Route path={"/add-money"} exact element={<AddMoney onAddMoney={this.addMoney}/>}/>
                     </Routes>
                 </div>
             </div>
@@ -67,6 +73,36 @@ class App extends Component {
         userService.logout()
         window.location.href = "/login"
     }
+
+    rentVehicle = (vehicleId) => {
+        // console.log(vehicleId.id)
+
+        rentService.rentVehicle(vehicleId.id)
+            .then(() => {
+                window.location.href = "/vehicles"
+            })
+    }
+
+    userDetails = () => {
+        userService.userDetails()
+            .then((data) => {
+                this.setState({
+                    userDetails: data.data
+                })
+            });
+    }
+
+    addMoney = (amount) => {
+        userService.addMoney(amount)
+            .then(() => {
+                window.location.href = "/account"
+            })
+    }
+
+    componentDidMount() {
+        this.userDetails()
+    }
+
 
 }
 
