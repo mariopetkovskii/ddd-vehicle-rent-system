@@ -2,6 +2,7 @@ package com.example.usersservice.domain.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import ddd.sharedkernel.domain.base.AbstractEntity;
+import ddd.sharedkernel.domain.valueobjects.financial.Money;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,6 +10,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
@@ -36,6 +38,9 @@ public class User extends AbstractEntity<UserId> {
 
     private Role role;
 
+    private Money money;
+
+    private Integer numberOfRents;
     public User(){
         super(UserId.randomId(UserId.class));
     }
@@ -50,6 +55,8 @@ public class User extends AbstractEntity<UserId> {
         this.dateCreated = OffsetDateTime.now();
         this.dateModified = OffsetDateTime.now();
         this.role = Role.ROLE_USER;
+        this.money = Money.valueOf(0);
+        this.numberOfRents = 0;
     }
 
 

@@ -19,12 +19,15 @@ public class Vehicle implements ValueObject {
 
     private final Type type;
 
+    private final Integer numOfRents;
+
     private Vehicle() {
         this.id = VehicleId.randomId(VehicleId.class);
         this.name = new Name();
         this.price = Money.valueOf(0);
         this.brand = new Brand();
         this.type = Type.CAR;
+        this.numOfRents = 0;
     }
 
     @JsonCreator
@@ -33,11 +36,13 @@ public class Vehicle implements ValueObject {
             @JsonProperty("name") Name name,
             @JsonProperty("brand") Brand brand,
             @JsonProperty("amount") Money price,
-            @JsonProperty("type") Type type) {
+            @JsonProperty("type") Type type,
+            @JsonProperty("numOfRents") Integer numOfRents) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.brand = brand;
         this.type = type;
+        this.numOfRents = numOfRents;
     }
 }

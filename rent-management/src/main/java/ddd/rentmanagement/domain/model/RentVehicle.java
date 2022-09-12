@@ -29,7 +29,6 @@ public class RentVehicle extends AbstractEntity<RentVehicleId> {
     @AttributeOverride(name = "id", column = @Column(name="vehicle_id", nullable = false))
     private VehicleId vehicleId;
 
-
     private Instant rentedOn;
 
     public RentVehicle(@NonNull VehicleId vehicleId, @NonNull Money rentPrice, Number daysRent){

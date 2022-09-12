@@ -30,7 +30,7 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Override
     public Optional<Vehicle> createVehicle(VehicleForm form) {
-        Vehicle vehicle = Vehicle.build(form.getName(), form.getBrand(), form.getPrice(), form.getType());
+        Vehicle vehicle = Vehicle.build(form.getName(), form.getBrand(), form.getPrice(), form.getType(), form.getNumOfRents());
         vehicleRepository.save(vehicle);
         return Optional.of(vehicle);
     }

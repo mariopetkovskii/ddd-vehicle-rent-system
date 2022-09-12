@@ -27,13 +27,13 @@ public class Vehicle extends AbstractEntity<VehicleId> {
         super(VehicleId.randomId(VehicleId.class));
     }
 
-    public static Vehicle build(Name name, Brand brand, Money price, Type type){
+    public static Vehicle build(Name name, Brand brand, Money price, Type type, int numOfRents){
         Vehicle vehicle = new Vehicle();
         vehicle.brand = brand;
         vehicle.name = name;
         vehicle.price = price;
         vehicle.type = type;
-        vehicle.numOfRents = 0;
+        vehicle.numOfRents = numOfRents;
         return vehicle;
     }
 

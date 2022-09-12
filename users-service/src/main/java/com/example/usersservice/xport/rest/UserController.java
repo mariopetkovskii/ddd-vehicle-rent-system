@@ -1,8 +1,6 @@
 package com.example.usersservice.xport.rest;
 
-import com.example.usersservice.domain.dto.UserEmailDto;
-import com.example.usersservice.domain.dto.UserInfoDto;
-import com.example.usersservice.domain.dto.UserRegisterDto;
+import com.example.usersservice.domain.dto.*;
 import com.example.usersservice.domain.models.User;
 import com.example.usersservice.service.interfaces.UserService;
 import lombok.AllArgsConstructor;
@@ -40,6 +38,40 @@ public class UserController {
                     userInfoDto.setFirstName(user.getFirstName());
                     userInfoDto.setLastName(user.getLastName());
                     userInfoDto.setId(user.getId().getId());
+                    userInfoDto.setMoney(user.getMoney());
+                    userInfoDto.setNumOfRents(user.getNumberOfRents());
+                    return ResponseEntity.ok().body(userInfoDto);
+                })
+                .orElseGet(() -> ResponseEntity.badRequest().build());
+    }
+
+    @PostMapping("/detailsWithId")
+    public ResponseEntity<UserInfoDto> userDetailsWithId(@RequestBody UserIdInfoDto userIdInfoDto){
+        return this.userService.detailsWithGivenId(userIdInfoDto)
+                .map(user -> {
+                    UserInfoDto userInfoDto = new UserInfoDto();
+                    userInfoDto.setEmail(user.getEmail());
+                    userInfoDto.setFirstName(user.getFirstName());
+                    userInfoDto.setLastName(user.getLastName());
+                    userInfoDto.setId(user.getId().getId());
+                    userInfoDto.setMoney(user.getMoney());
+                    userInfoDto.setNumOfRents(user.getNumberOfRents());
+                    return ResponseEntity.ok().body(userInfoDto);
+                })
+                .orElseGet(() -> ResponseEntity.badRequest().build());
+    }
+
+    @PostMapping("/addMoney")
+    public ResponseEntity<UserInfoDto> addMoney(@RequestBody AddMoneyDto addMoneyDto){
+        return this.userService.addMoneyToUser(addMoneyDto)
+                .map(user -> {
+                    UserInfoDto userInfoDto = new UserInfoDto();
+                    userInfoDto.setEmail(user.getEmail());
+                    userInfoDto.setFirstName(user.getFirstName());
+                    userInfoDto.setLastName(user.getLastName());
+                    userInfoDto.setId(user.getId().getId());
+                    userInfoDto.setMoney(user.getMoney());
+                    userInfoDto.setNumOfRents(user.getNumberOfRents());
                     return ResponseEntity.ok().body(userInfoDto);
                 })
                 .orElseGet(() -> ResponseEntity.badRequest().build());

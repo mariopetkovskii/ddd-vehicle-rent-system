@@ -1,9 +1,12 @@
 package ddd.rentmanagement.xport.rest;
 
+import ddd.rentmanagement.domain.dto.UserIdDto;
 import ddd.rentmanagement.domain.dto.VehicleIdDto;
 import ddd.rentmanagement.domain.dto.VehicleUserIdsDto;
+import ddd.rentmanagement.domain.valueobjects.User;
 import ddd.rentmanagement.domain.valueobjects.Vehicle;
 import ddd.rentmanagement.service.RentService;
+import ddd.rentmanagement.xport.client.UserClient;
 import ddd.rentmanagement.xport.client.VehicleClient;
 import lombok.AllArgsConstructor;
 import org.springframework.http.MediaType;
@@ -19,6 +22,8 @@ import java.util.Optional;
 public class RentController {
     private final VehicleClient vehicleClient;
     private final RentService rentService;
+
+    private final UserClient userClient;
 
     @GetMapping
     private List<Vehicle> listAll(){
@@ -36,4 +41,5 @@ public class RentController {
                 .map(v -> ResponseEntity.ok().body("Successfully"))
                 .orElseGet(() -> ResponseEntity.badRequest().build());
     }
+
 }

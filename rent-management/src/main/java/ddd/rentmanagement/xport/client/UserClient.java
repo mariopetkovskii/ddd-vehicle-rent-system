@@ -1,6 +1,7 @@
 package ddd.rentmanagement.xport.client;
 
 import ddd.rentmanagement.domain.dto.UserIdDto;
+import ddd.rentmanagement.domain.valueobjects.User;
 import ddd.rentmanagement.domain.valueobjects.Vehicle;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
@@ -27,10 +28,9 @@ public class UserClient {
         return UriComponentsBuilder.fromUriString(this.serverUrl);
     }
 
-//    public UserIdDto getUserWithGivenId(String uuid){
-//        Map<String, String> map = new HashMap<>();
-//        map.put("id", uuid);
-//        return restTemplate.postForObject(uri().path("/rest/vehicle/getVehicle").build().toUri(), map, Vehicle.class);
-//
-//    }
+    public User getUserWithGivenId(String uuid){
+        Map<String, String> map = new HashMap<>();
+        map.put("id", uuid);
+        return restTemplate.postForObject(uri().path("/rest/user/detailsWithId").build().toUri(), map, User.class);
+    }
 }
