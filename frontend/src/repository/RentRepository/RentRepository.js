@@ -1,10 +1,12 @@
 import axios_rent from "../../axios/axios_rent";
 
+const loggedInEmail = 'loggedEmail'
+
 
 const rentRepository = {
     rentVehicle: (vehicleId, days) => {
         return axios_rent.post("/rent/vehicle/rent", {
-            "email": "petkomario@gmail.com",
+            "email": localStorage.getItem(loggedInEmail),
             "vehicleId": vehicleId,
             "days": days
         })

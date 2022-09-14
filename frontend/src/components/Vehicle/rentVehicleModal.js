@@ -37,7 +37,9 @@ function RentVehicleModal(props) {
         const submit = await rentService.rentVehicle(props.dynData.id.id, days);
         if(submit === "You can't rent this car"){
             updateErrorMessage(submit);
-        }else{
+        }else if(submit === "Vehicle not available at this moment"){
+            updateErrorMessage(submit)
+        }else {
             window.location.href = "/vehicles"
         }
     }

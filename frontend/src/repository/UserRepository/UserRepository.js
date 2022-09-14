@@ -34,6 +34,7 @@ const userRepository = {
 
     logout: () => {
         localStorage.removeItem(AUTH_TOKEN);
+        localStorage.removeItem(loggedInEmail);
     },
 
     userDetails: () => {

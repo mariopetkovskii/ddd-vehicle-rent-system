@@ -50,7 +50,6 @@ public class RentServiceImpl implements RentService {
             throw new ConstraintViolationException("The order form is not valid", constraintsViolations);
         }
         var newRent = this.rentRepository.saveAndFlush(toRentObject(rentForm));
-        newRent.getRentVehicleSet().forEach(item -> domainEventPublisher.publish(new RentItemCreated(item.getVehicleId().getId(), item.getDaysRent().intValue())));
         return newRent.getId();
     }
 
@@ -79,6 +78,7 @@ public class RentServiceImpl implements RentService {
         this.rentRepository.saveAndFlush(rent);
     }
 
+    @Transactional
     @Override
     public Optional<String> rentVehicle(VehicleUserIdsDto vehicleUserIdsDto) {
         RentVehicleForm rentVehicleForm = new RentVehicleForm();
@@ -106,7 +106,7 @@ public class RentServiceImpl implements RentService {
         RentId rentId = this.rent(rentForm);
         findById(rentId).orElseThrow(RentIdNotExistException::new);
 
-//        this.domainEventPublisher.publish(new RentItemCreated(rentVehicleForm.getVehicle().getVehicleId().getId(), rentVehicleForm.getDaysRent()));
+        this.domainEventPublisher.publish(new RentItemCreated(rentVehicleForm.getVehicle().getVehicleId().getId(), rentVehicleForm.getDaysRent()));
 
         return Optional.of("Successfully added");
     }

@@ -35,11 +35,12 @@ public class VehicleServiceImpl implements VehicleService {
         return Optional.of(vehicle);
     }
 
+    @Transactional
     @Override
     public Vehicle vehicleItemCreated(VehicleId vehicleId) {
         Vehicle vehicle = this.vehicleRepository.findById(vehicleId).orElseThrow(VehicleNotFoundException::new);
         vehicle.addRent();
-        this.vehicleRepository.saveAndFlush(vehicle);
+        this.vehicleRepository.save(vehicle);
         return vehicle;
     }
 
