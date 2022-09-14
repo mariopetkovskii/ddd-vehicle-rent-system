@@ -11,5 +11,10 @@
 ![alt text](https://github.com/mariopetkovskii/ddd-vehicle-rent-system/blob/main/ddd-vehicle-rent-system.png?raw=true)
 <hr>
 
+##### To start the databases and Kafka, use the following command:
+```
+docker-compose up -d
+```
+
 ##### This project has stateless authentication. After authentication, a user gets JWT token and stores it in local storage.
 ##### Mario Petkovski, FCSE student
