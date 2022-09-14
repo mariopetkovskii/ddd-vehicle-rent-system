@@ -2,8 +2,8 @@ import rentRepository from "../../repository/RentRepository/RentRepository";
 
 
 const rentService = {
-    rentVehicle: (vehicleId) => {
-        return rentRepository.rentVehicle(vehicleId)
+    rentVehicle: (vehicleId, days) => {
+        return rentRepository.rentVehicle(vehicleId, days)
     }
 }
 

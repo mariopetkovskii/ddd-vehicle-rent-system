@@ -8,6 +8,7 @@ import ddd.rentmanagement.domain.exceptions.RentVehicleIdNotExistException;
 import ddd.rentmanagement.domain.model.Rent;
 import ddd.rentmanagement.domain.model.RentId;
 import ddd.rentmanagement.domain.model.RentVehicleId;
+import ddd.rentmanagement.domain.valueobjects.Vehicle;
 import ddd.rentmanagement.service.forms.RentForm;
 import ddd.rentmanagement.service.forms.RentVehicleForm;
 
@@ -20,6 +21,6 @@ public interface RentService {
     Optional<Rent> findById(RentId rentId);
     void addVehicle(RentId rentId, RentVehicleForm rentVehicleForm) throws RentIdNotExistException;
     void deleteVehicle(RentId rentId, RentVehicleId rentVehicleId) throws RentIdNotExistException, RentVehicleIdNotExistException;
-
     Optional<String> rentVehicle(VehicleUserIdsDto vehicleUserIdsDto);
+    List<Vehicle> findAllByUser(UserIdDto userIdDto);
 }

@@ -9,9 +9,11 @@ import ddd.rentmanagement.domain.exceptions.UserNotEnoughMoneyException;
 import ddd.rentmanagement.domain.exceptions.VehicleNotInStockException;
 import ddd.rentmanagement.domain.model.Rent;
 import ddd.rentmanagement.domain.model.RentId;
+import ddd.rentmanagement.domain.model.RentVehicle;
 import ddd.rentmanagement.domain.model.RentVehicleId;
 import ddd.rentmanagement.domain.repository.RentRepository;
 import ddd.rentmanagement.domain.valueobjects.User;
+import ddd.rentmanagement.domain.valueobjects.Vehicle;
 import ddd.rentmanagement.service.RentService;
 import ddd.rentmanagement.service.forms.RentForm;
 import ddd.rentmanagement.service.forms.RentVehicleForm;
@@ -26,10 +28,8 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Validator;
 import java.time.Instant;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -92,23 +92,53 @@ public class RentServiceImpl implements RentService {
 
         RentForm rentForm = new RentForm();
         rentForm.setItems(List.of(rentVehicleForm));
+
+        Double price = rentVehicleForm.getVehicle().getPrice().getAmount() * vehicleUserIdsDto.getDays();
+
         User user = this.userClient.userDetails(vehicleUserIdsDto.getEmail());
-        if(user.getMoney().getAmount() < rentVehicleForm.getVehicle().getPrice().getAmount()){
+        if(user.getMoney().getAmount() < price){
             throw new UserNotEnoughMoneyException();
         }
 
+        this.userClient.rentCar(vehicleUserIdsDto.getEmail(), price);
         System.out.println(user.getLastName());
         rentForm.setUserId(user.getId().getId());
 
 
         RentId rentId = this.rent(rentForm);
-        Rent rent = findById(rentId).orElseThrow(RentIdNotExistException::new);
+        findById(rentId).orElseThrow(RentIdNotExistException::new);
         return Optional.of("Successfully added");
     }
 
+    @Override
+    public List<Vehicle> findAllByUser(UserIdDto userIdDto) {
+        Rent rent = this.rentRepository.findByUserId(userIdDto.getId());
+
+
+        List<RentVehicle> rentVehicles = rent.getRentVehicleSet().stream().toList();
+
+        List<Vehicle> vehicles = new ArrayList<>();
+
+        rentVehicles.forEach(v -> {
+            Vehicle vehicle = this.vehicleClient.getVehicleWithGivenId(v.getVehicleId().getId());
+            vehicles.add(vehicle);
+        });
+
+        return vehicles;
+
+
+    }
+
     private Rent toRentObject(RentForm rentForm){
-        var rent = new Rent(rentForm.getUserId());
-        rentForm.getItems().forEach(item -> rent.addVehicle(item.getVehicle(), item.getDaysRent()));
-        return rent;
+        if(this.rentRepository.findByUserId(rentForm.getUserId()) == null){
+            Rent rent = new Rent(rentForm.getUserId());
+            rentForm.getItems().forEach(item -> rent.addVehicle(item.getVehicle(), item.getDaysRent()));
+            return rent;
+        }else{
+            Rent rent = this.rentRepository.findByUserId(rentForm.getUserId());
+            rentForm.getItems().forEach(item -> rent.addVehicle(item.getVehicle(), item.getDaysRent()));
+            return rent;
+        }
+
     }
 }

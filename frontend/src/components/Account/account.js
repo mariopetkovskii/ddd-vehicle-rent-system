@@ -24,7 +24,7 @@ const Account = (props) => {
                             <td>{props.userDetails.firstName}</td>
                             <td>{props.userDetails.lastName}</td>
                             <td>{props.userDetails.email}</td>
-                            <td>${props.userDetails.numOfRents}</td>
+                            <td>${props.userDetails.money?.amount}</td>
                             <td>{props.userDetails.numOfRents}</td>
                         </tr>
                         </tbody>

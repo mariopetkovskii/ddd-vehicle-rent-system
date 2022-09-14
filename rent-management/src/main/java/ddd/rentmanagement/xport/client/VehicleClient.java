@@ -48,7 +48,8 @@ public class VehicleClient {
     public Vehicle getVehicleWithGivenId(String uuid){
         Map<String, String> map = new HashMap<>();
         map.put("id", uuid);
-        return restTemplate.postForObject(uri().path("/rest/vehicle/getVehicle").build().toUri(), map, Vehicle.class);
+        Vehicle vehicle = restTemplate.postForObject(uri().path("/rest/vehicle/getVehicle").build().toUri(), map, Vehicle.class);
+        return vehicle;
 
     }
 

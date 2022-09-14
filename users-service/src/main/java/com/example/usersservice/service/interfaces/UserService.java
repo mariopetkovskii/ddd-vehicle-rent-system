@@ -1,9 +1,6 @@
 package com.example.usersservice.service.interfaces;
 
-import com.example.usersservice.domain.dto.AddMoneyDto;
-import com.example.usersservice.domain.dto.UserEmailDto;
-import com.example.usersservice.domain.dto.UserIdInfoDto;
-import com.example.usersservice.domain.dto.UserRegisterDto;
+import com.example.usersservice.domain.dto.*;
 import com.example.usersservice.domain.models.User;
 import com.example.usersservice.domain.models.UserId;
 
@@ -28,6 +25,8 @@ public interface UserService {
     Optional<User> addMoneyToUser(AddMoneyDto addMoneyDto);
 
     Optional<User> detailsWithGivenId(UserIdInfoDto userIdInfoDto);
+
+    Optional<User> rentCar(RentCarDto rentCarDto);
 
 
 }

@@ -15,7 +15,7 @@ const header = (props) => {
                         <div className="collapse navbar-collapse justify-content-end" id="navbarsExampleDefault">
                             <ul className="navbar-nav m-auto">
                                 <li className="nav-item m-auto">
-                                    <a href="/home" className="nav-link active" style={{color: "black"}}>Home</a>
+                                    <a href="/vehicles" className="nav-link active" style={{color: "black"}}>Home</a>
                                 </li>
                                 <li className="nav-item m-auto">
                                     <a href="/vehicles" className="nav-link" style={{color: "black"}}>Vehicles</a>
@@ -56,9 +56,20 @@ const header = (props) => {
                             <li className="nav-item m-auto">
                                 <a href="/vehicles" className="nav-link" style={{color: "black"}}>Vehicles</a>
                             </li>
+                            <li className="nav-item m-auto">
+                                <a href="/rented-vehicles" className="nav-link" style={{color: "black"}}>My vehicles</a>
+                            </li>
                         </ul>
                         <ul className="nav navbar-nav navbar-right">
-
+                            <li className="nav-item">
+                                <a href="/add-money" className="nav-link" style={{color: "black"}}>${props.userDetails.money?.amount}</a>
+                            </li>
+                            <li className="nav-item">
+                                <a href="/account" className="nav-link" style={{color: "black"}}>
+                                    {props.userDetails.firstName +
+                                    ' '
+                                    + props.userDetails.lastName}</a>
+                            </li>
                             <li className="nav-item">
                                 <a href="" onClick={props.logout} className="nav-link" style={{color: "black"}}>Logout</a>
                             </li>

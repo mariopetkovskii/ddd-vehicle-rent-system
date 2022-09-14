@@ -77,4 +77,20 @@ public class UserController {
                 })
                 .orElseGet(() -> ResponseEntity.badRequest().build());
     }
+
+    @PostMapping("/rentCar")
+    public ResponseEntity<UserInfoDto> rentCar(@RequestBody RentCarDto rentCarDto){
+        return this.userService.rentCar(rentCarDto)
+                .map(user -> {
+                    UserInfoDto userInfoDto = new UserInfoDto();
+                    userInfoDto.setEmail(user.getEmail());
+                    userInfoDto.setFirstName(user.getFirstName());
+                    userInfoDto.setLastName(user.getLastName());
+                    userInfoDto.setId(user.getId().getId());
+                    userInfoDto.setMoney(user.getMoney());
+                    userInfoDto.setNumOfRents(user.getNumberOfRents());
+                    return ResponseEntity.ok().body(userInfoDto);
+                })
+                .orElseGet(() -> ResponseEntity.badRequest().build());
+    }
 }

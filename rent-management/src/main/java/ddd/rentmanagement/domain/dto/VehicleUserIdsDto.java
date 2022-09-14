@@ -7,4 +7,5 @@ public class VehicleUserIdsDto {
     private String userId;
     private String vehicleId;
     private String email;
+    private Integer days;
 }

@@ -1,5 +1,6 @@
 import axios_users from "../../axios/axios_users";
 import jwt_decode from "jwt-decode";
+import axios_rent from "../../axios/axios_rent";
 
 const AUTH_TOKEN = 'auth_token';
 const loggedInEmail = 'loggedEmail'
@@ -45,6 +46,12 @@ const userRepository = {
         return axios_users.post("/user/addMoney", {
             "email": localStorage.getItem(loggedInEmail),
             "amount": amount
+        })
+    },
+
+    getAllRentedVehicles: (id) => {
+        return axios_rent.post("/rent/vehicle/getUserVehicles", {
+            "id": id
         })
     }
 

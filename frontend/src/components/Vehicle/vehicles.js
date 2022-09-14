@@ -2,13 +2,15 @@ import * as React from 'react';
 import {useState} from 'react';
 import MaterialTable from 'material-table';
 import VehicleAddModal from "./vehicleAddModal";
-import vehicleService from "../../service/VehicleService/VehicleService";
+import RentVehicleModal from "./rentVehicleModal";
 
 
 const Vehicle = (props) => {
 
     const [openModal, setOpenedModal] = useState(null);
-    const [modalIsOpen, setIsOpen] = React.useState(false);
+    const [openModalRent, setOpenedModalRent] = useState(null);
+    const [modalIsOpenAddVehicle, setIsOpen] = React.useState(false);
+    const [modalIsOpenRent, setIsOpenRent] = React.useState(false);
     const [selectedRow, setSelectedRow] = useState(null);
     const [errorMessage, updateErrorMessage] = React.useState()
 
@@ -18,18 +20,30 @@ const Vehicle = (props) => {
         setIsOpen(true)
     }
 
+    function openModalVehicleRent(addVehicleModal) {
+        setOpenedModalRent(addVehicleModal)
+        setIsOpenRent(true)
+    }
+
     function openFromParent(rowData) {
         setSelectedRow(rowData)
-        setIsOpen(true);
-        props.onRent(rowData.id)
+        setIsOpenRent(true);
+        // props.onRent(rowData.id)
         console.log(rowData.id)
     }
 
-    function handleCloseModal() {
+    function handleCloseModalAddVehicle() {
         setIsOpen(false);
     }
 
-    function handleAfterOpen(event, data) {
+    function handleCloseModalRent() {
+        setIsOpenRent(false);
+    }
+
+    function handleAfterOpenAddVehicle(event, data) {
+    }
+
+    function handleAfterOpenRent(event, data) {
     }
 
     const columns = [
@@ -52,14 +66,21 @@ const Vehicle = (props) => {
     // }
 
     return (
-
-        <div>
+            <div>
             <VehicleAddModal
                 dynData={openModal}
-                IsModalOpened={modalIsOpen}
-                onCloseModal={handleCloseModal}
-                onAfterOpen={handleAfterOpen}
+                IsModalOpened={modalIsOpenAddVehicle}
+                onCloseModal={handleCloseModalAddVehicle}
+                onAfterOpen={handleAfterOpenAddVehicle}
                 onAddVehicle={props.onAddVehicle}
+            />
+
+            <RentVehicleModal
+                dynData={selectedRow}
+                IsModalOpened={modalIsOpenRent}
+                onCloseModal={handleCloseModalRent}
+                onOpenModal={handleAfterOpenRent}
+                onRentVehicle={props.onRent}
             />
 
 
@@ -86,7 +107,6 @@ const Vehicle = (props) => {
                                         totalCount: response.totalElements,
                                     });
                                 })
-
                             })
                         }
                         title={<h5><strong>Vehicles</strong></h5>}
@@ -114,7 +134,7 @@ const Vehicle = (props) => {
                         }}
                         actions= {[
                             {
-                                icon: ()  => <button  className={"btn btn-warning"}>Details</button>,
+                                icon: ()  => <button className={"btn btn-warning"}>Rent</button>,
                                 tooltip: 'Open Details',
                                 onClick: (event, rowData) => openFromParent(rowData)
                             }]

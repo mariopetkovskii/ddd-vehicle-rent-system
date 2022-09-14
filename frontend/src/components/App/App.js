@@ -10,6 +10,8 @@ import Login from "../Auth/Login";
 import rentService from "../../service/RentService/rentService";
 import Account from "../Account/account";
 import AddMoney from "../Account/add-money";
+import RentedVehicles from "../Account/rented-vehicles";
+import jwt_decode from "jwt-decode";
 
 class App extends Component {
     constructor(props) {
@@ -17,7 +19,8 @@ class App extends Component {
         this.state = {
             vehicles: [],
             isUserLoggedIn: userService.checkIfUserLoggedIn(),
-            userDetails: []
+            userDetails: [],
+            rentedVehicles: []
         }
     }
 
@@ -25,7 +28,9 @@ class App extends Component {
         return (
             <div>
                 <Header isUserLoggedIn={this.state.isUserLoggedIn}
-                        logout={this.logout}/>
+                        logout={this.logout}
+                        userDetails={this.state.userDetails}
+                />
                 <div className={"container"}>
                     <Routes>
                         <Route path={"/vehicles"} exact element={<Vehicle onAddVehicle={this.addVehicle} onRent={this.rentVehicle}/>}/>
@@ -33,6 +38,8 @@ class App extends Component {
                         <Route path={"/login"} exact element={<Login onLogin={this.login}/>}/>
                         <Route path={"/account"} exact element={<Account userDetails={this.state.userDetails}/>}/>
                         <Route path={"/add-money"} exact element={<AddMoney onAddMoney={this.addMoney}/>}/>
+                        <Route path={"/rented-vehicles"} exact element={<RentedVehicles rentedVehicles={this.state.rentedVehicles}
+                                                                                        onLoad={this.getAllRentedUserVehicles}/>}/>
                     </Routes>
                 </div>
             </div>
@@ -74,10 +81,10 @@ class App extends Component {
         window.location.href = "/login"
     }
 
-    rentVehicle = (vehicleId) => {
+    rentVehicle = (vehicleId, days) => {
         // console.log(vehicleId.id)
 
-        rentService.rentVehicle(vehicleId.id)
+        rentService.rentVehicle(vehicleId, days)
             .then(() => {
                 window.location.href = "/vehicles"
             })
@@ -99,8 +106,18 @@ class App extends Component {
             })
     }
 
+    getAllRentedUserVehicles = () => {
+        userService.getAllRentedVehicles(jwt_decode(localStorage.getItem('auth_token')).id).then((data) => {
+            this.setState({
+                rentedVehicles: data.data
+            })
+        })
+    }
+
     componentDidMount() {
         this.userDetails()
+        if(userService.checkIfUserLoggedIn())
+            this.getAllRentedUserVehicles()
     }
 
 

@@ -1,9 +1,6 @@
 package com.example.usersservice.service.impl;
 
-import com.example.usersservice.domain.dto.AddMoneyDto;
-import com.example.usersservice.domain.dto.UserEmailDto;
-import com.example.usersservice.domain.dto.UserIdInfoDto;
-import com.example.usersservice.domain.dto.UserRegisterDto;
+import com.example.usersservice.domain.dto.*;
 import com.example.usersservice.domain.exceptions.PasswordsDoNotMatchException;
 import com.example.usersservice.domain.exceptions.UserAlreadyExistsException;
 import com.example.usersservice.domain.models.User;
@@ -85,5 +82,12 @@ public class UserServiceImpl implements UserService {
     public Optional<User> detailsWithGivenId(UserIdInfoDto userIdInfoDto) {
         UserId userId = new UserId(userIdInfoDto.getId());
         return this.userRepository.findById(userId);
+    }
+
+    @Override
+    public Optional<User> rentCar(RentCarDto rentCarDto) {
+        User user = this.userRepository.findByEmail(rentCarDto.getEmail());
+        user.setMoney(new Money(user.getMoney().getAmount() - Double.parseDouble(rentCarDto.getAmount())));
+        return Optional.of(this.userRepository.save(user));
     }
 }

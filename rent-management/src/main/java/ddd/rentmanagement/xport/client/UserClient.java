@@ -1,8 +1,6 @@
 package ddd.rentmanagement.xport.client;
 
-import ddd.rentmanagement.domain.dto.UserIdDto;
 import ddd.rentmanagement.domain.valueobjects.User;
-import ddd.rentmanagement.domain.valueobjects.Vehicle;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
@@ -38,5 +36,12 @@ public class UserClient {
         Map<String, String> map = new HashMap<>();
         map.put("email", email);
         return restTemplate.postForObject(uri().path("/rest/user/details").build().toUri(), map, User.class);
+    }
+
+    public void rentCar(String email, Double amount){
+        Map<String, String> map = new HashMap<>();
+        map.put("email", email);
+        map.put("amount", amount.toString());
+        restTemplate.postForObject(uri().path("/rest/user/rentCar").build().toUri(), map, User.class);
     }
 }

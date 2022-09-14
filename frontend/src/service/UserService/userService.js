@@ -26,6 +26,10 @@ const userService = {
 
     addMoney: (amount) => {
         return userRepository.addMoney(amount);
+    },
+
+    getAllRentedVehicles: (id) => {
+        return userRepository.getAllRentedVehicles(id);
     }
 
 }

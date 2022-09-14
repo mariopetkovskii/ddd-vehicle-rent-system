@@ -43,4 +43,8 @@ public class RentController {
                 .orElseGet(() -> ResponseEntity.badRequest().build());
     }
 
+    @PostMapping(value = "/vehicle/getUserVehicles")
+    private List<Vehicle> rentVehicle(@RequestBody UserIdDto userIdDto){
+        return this.rentService.findAllByUser(userIdDto);
+    }
 }
