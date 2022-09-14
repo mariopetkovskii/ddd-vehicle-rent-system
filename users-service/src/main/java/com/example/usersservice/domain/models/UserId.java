@@ -11,4 +11,9 @@ public class UserId extends DomainObjectId {
     public UserId(@NonNull String uuid){
         super(uuid);
     }
+
+    public static UserId of(String uuid){
+        return new UserId(uuid);
+    }
+
 }

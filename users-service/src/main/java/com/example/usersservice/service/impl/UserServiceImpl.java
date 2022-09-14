@@ -3,12 +3,14 @@ package com.example.usersservice.service.impl;
 import com.example.usersservice.domain.dto.*;
 import com.example.usersservice.domain.exceptions.PasswordsDoNotMatchException;
 import com.example.usersservice.domain.exceptions.UserAlreadyExistsException;
+import com.example.usersservice.domain.exceptions.UserNotEnabledException;
 import com.example.usersservice.domain.models.User;
 import com.example.usersservice.domain.models.UserId;
 import com.example.usersservice.domain.repository.UserRepository;
 import com.example.usersservice.service.interfaces.UserService;
 import ddd.sharedkernel.domain.valueobjects.financial.Money;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -93,5 +95,13 @@ public class UserServiceImpl implements UserService {
             user.setMoney(new Money(user.getMoney().getAmount() - Double.parseDouble(rentCarDto.getAmount())));
         }
         return Optional.of(this.userRepository.save(user));
+    }
+
+    @Override
+    public User rentCarIncreaseRents(UserId userId) {
+        User user = this.userRepository.findById(userId).orElseThrow(UserNotEnabledException::new);
+        user.addNumOfRent();
+        this.userRepository.save(user);
+        return user;
     }
 }

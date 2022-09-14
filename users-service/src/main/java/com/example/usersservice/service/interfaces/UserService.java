@@ -28,5 +28,6 @@ public interface UserService {
 
     Optional<User> rentCar(RentCarDto rentCarDto);
 
+    User rentCarIncreaseRents(UserId userId);
 
 }

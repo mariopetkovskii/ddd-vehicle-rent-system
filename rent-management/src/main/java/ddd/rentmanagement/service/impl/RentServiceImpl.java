@@ -20,6 +20,7 @@ import ddd.rentmanagement.service.forms.RentVehicleForm;
 import ddd.rentmanagement.xport.client.UserClient;
 import ddd.rentmanagement.xport.client.VehicleClient;
 import ddd.sharedkernel.domain.events.rents.RentItemCreated;
+import ddd.sharedkernel.domain.events.users.IncreaseNumRentsUser;
 import ddd.sharedkernel.infra.DomainEventPublisher;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -107,6 +108,7 @@ public class RentServiceImpl implements RentService {
         findById(rentId).orElseThrow(RentIdNotExistException::new);
 
         this.domainEventPublisher.publish(new RentItemCreated(rentVehicleForm.getVehicle().getVehicleId().getId(), rentVehicleForm.getDaysRent()));
+        this.domainEventPublisher.publish(new IncreaseNumRentsUser(user.getId().getId()));
 
         return Optional.of("Successfully added");
     }
@@ -114,7 +116,6 @@ public class RentServiceImpl implements RentService {
     @Override
     public List<Vehicle> findAllByUser(UserIdDto userIdDto) {
         Rent rent = this.rentRepository.findByUserId(userIdDto.getId());
-
 
         List<RentVehicle> rentVehicles = rent.getRentVehicleSet().stream().toList();
 

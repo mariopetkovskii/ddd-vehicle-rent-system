@@ -5,6 +5,7 @@ import ddd.sharedkernel.domain.base.AbstractEntity;
 import ddd.sharedkernel.domain.valueobjects.financial.Money;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -57,6 +58,10 @@ public class User extends AbstractEntity<UserId> {
         this.role = Role.ROLE_USER;
         this.money = Money.valueOf(0);
         this.numberOfRents = 0;
+    }
+
+    public void addNumOfRent(){
+        this.numberOfRents += 1;
     }
 
 
