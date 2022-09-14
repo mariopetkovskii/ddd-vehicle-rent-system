@@ -42,7 +42,7 @@ public class Rent extends AbstractEntity<RentId> {
 
     public RentVehicle addVehicle(@NonNull Vehicle vehicle, int rentDays){
         Objects.requireNonNull(vehicle, "vehicle must not be null");
-        var item = new RentVehicle(vehicle.getId(), vehicle.getPrice(), rentDays);
+        var item = new RentVehicle(vehicle.getVehicleId(), vehicle.getPrice(), rentDays);
         this.rentVehicleSet.add(item);
         return item;
     }

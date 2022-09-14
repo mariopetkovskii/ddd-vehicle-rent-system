@@ -21,7 +21,7 @@ public class VehicleEventListener {
             RentItemCreated event = DomainEvent.fromJson(jsonMessage, RentItemCreated.class);
             vehicleService.vehicleItemCreated(VehicleId.of(event.getVehicleId()));
         } catch (Exception e){
-
+            System.out.println(e.getMessage());
         }
     }
 

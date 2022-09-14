@@ -10,7 +10,7 @@ public class RentItemCreated extends DomainEvent {
     private String vehicleId;
     private int daysRent;
 
-    public RentItemCreated(String topic) {
+    public RentItemCreated() {
         super(TopicHolder.TOPIC_RENT_ITEM_CREATED);
     }
 

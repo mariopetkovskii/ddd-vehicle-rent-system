@@ -9,6 +9,7 @@ const rentRepository = {
             "days": days
         })
             .catch(error => {
+                console.log(error.response.data.message)
                 return error.response.data.message
             })
     },

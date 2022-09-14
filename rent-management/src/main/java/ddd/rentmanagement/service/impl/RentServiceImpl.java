@@ -38,7 +38,6 @@ public class RentServiceImpl implements RentService {
 
     private final RentRepository rentRepository;
     private final Validator validator;
-
     private final DomainEventPublisher domainEventPublisher;
     private final VehicleClient vehicleClient;
     private final UserClient userClient;
@@ -69,7 +68,7 @@ public class RentServiceImpl implements RentService {
     public void addVehicle(RentId rentId, RentVehicleForm rentVehicleForm) throws RentIdNotExistException {
         Rent rent = this.rentRepository.findById(rentId).orElseThrow(RentIdNotExistException::new);
         rent.addVehicle(rentVehicleForm.getVehicle(), rentVehicleForm.getDaysRent());
-        this.domainEventPublisher.publish(new RentItemCreated(rentVehicleForm.getVehicle().getId().getId(), rentVehicleForm.getDaysRent()));
+        this.domainEventPublisher.publish(new RentItemCreated(rentVehicleForm.getVehicle().getVehicleId().getId(), rentVehicleForm.getDaysRent()));
         this.rentRepository.saveAndFlush(rent);
     }
 
@@ -84,7 +83,7 @@ public class RentServiceImpl implements RentService {
     public Optional<String> rentVehicle(VehicleUserIdsDto vehicleUserIdsDto) {
         RentVehicleForm rentVehicleForm = new RentVehicleForm();
         rentVehicleForm.setVehicle(vehicleClient.getVehicleWithGivenId(vehicleUserIdsDto.getVehicleId()));
-        rentVehicleForm.setDaysRent(2);
+        rentVehicleForm.setDaysRent(vehicleUserIdsDto.getDays());
 
         if(rentVehicleForm.getVehicle().getNumOfRents() == 0){
             throw new VehicleNotInStockException();
@@ -104,9 +103,11 @@ public class RentServiceImpl implements RentService {
         System.out.println(user.getLastName());
         rentForm.setUserId(user.getId().getId());
 
-
         RentId rentId = this.rent(rentForm);
         findById(rentId).orElseThrow(RentIdNotExistException::new);
+
+//        this.domainEventPublisher.publish(new RentItemCreated(rentVehicleForm.getVehicle().getVehicleId().getId(), rentVehicleForm.getDaysRent()));
+
         return Optional.of("Successfully added");
     }
 

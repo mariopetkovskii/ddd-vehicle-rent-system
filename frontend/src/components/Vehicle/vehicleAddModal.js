@@ -1,5 +1,7 @@
 import Modal from 'react-modal';
 import * as React from 'react';
+import {useNavigate} from "react-router-dom";
+import jwt_decode from "jwt-decode";
 
 const customStyles = {
     content: {
@@ -15,7 +17,8 @@ const customStyles = {
     }
 };
 
-function VehicleAddModal(props) {
+const VehicleAddModal = (props) => {
+
     function afterOpenModal(e) {
         props.onAfterOpen(e, 'After Modal Opened');
     }
@@ -29,7 +32,8 @@ function VehicleAddModal(props) {
         name: "",
         brand: "",
         price: 0,
-        type: "CAR"
+        type: "CAR",
+        numOfRents: 0
     })
 
     const handleChange = (e) => {
@@ -45,7 +49,8 @@ function VehicleAddModal(props) {
         const brand = formData.brand;
         const price = formData.price;
         const type = formData.type;
-        props.onAddVehicle(name, brand, price, type);
+        const numOfRents = formData.numOfRents
+        props.onAddVehicle(name, brand, price, type, numOfRents);
     }
 
 
@@ -98,6 +103,15 @@ function VehicleAddModal(props) {
                                        name="type"
                                        required
                                        placeholder="Enter type"
+                                       onChange={handleChange}
+                                />
+                                <label htmlFor="numOfRents">Available</label>
+                                <input type="number"
+                                       className="form-control"
+                                       id="numOfRents"
+                                       name="numOfRents"
+                                       required
+                                       placeholder="Enter available vehicles"
                                        onChange={handleChange}
                                 />
                             </div>

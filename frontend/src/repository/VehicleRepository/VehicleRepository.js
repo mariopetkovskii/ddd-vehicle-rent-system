@@ -6,7 +6,7 @@ const vehicleRepository = {
         return axios_vehicle.get("/vehicle/listAll");
     },
 
-    addVehicle: (name, brand, amount, type) => {
+    addVehicle: (name, brand, amount, type, numOfRents) => {
         return axios_vehicle.post("/vehicle/create", {
             "name": {
                 "name": name
@@ -17,7 +17,8 @@ const vehicleRepository = {
             "price": {
                 "amount": amount
             },
-            "type": type
+            "type": type,
+            "numOfRents": numOfRents
         })
     }
 }

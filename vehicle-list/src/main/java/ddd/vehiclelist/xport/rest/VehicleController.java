@@ -31,7 +31,6 @@ public class VehicleController {
                                                @PathVariable Integer size){
         return this.vehicleService.findAllWithPagination(PageRequest.of(page, size));
     }
-
     @PostMapping("/create")
     public ResponseEntity<Vehicle> create(@RequestBody VehicleForm vehicleForm){
         return this.vehicleService.createVehicle(vehicleForm)

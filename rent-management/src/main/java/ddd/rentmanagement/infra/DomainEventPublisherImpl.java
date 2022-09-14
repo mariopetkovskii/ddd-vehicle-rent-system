@@ -3,6 +3,7 @@ package ddd.rentmanagement.infra;
 import ddd.sharedkernel.domain.events.DomainEvent;
 import ddd.sharedkernel.infra.DomainEventPublisher;
 import lombok.AllArgsConstructor;
+
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
@@ -11,10 +12,10 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class DomainEventPublisherImpl implements DomainEventPublisher {
 
-    private final KafkaTemplate<String, String> kafkaTemplate;
+    private final KafkaTemplate<String,String> kafkaTemplate;
 
     @Override
     public void publish(DomainEvent event) {
-        this.kafkaTemplate.send(event.topic(), event.toJson());
+        this.kafkaTemplate.send(event.topic(),event.toJson());
     }
 }

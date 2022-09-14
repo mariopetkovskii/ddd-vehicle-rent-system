@@ -1,5 +1,6 @@
 import Modal from 'react-modal';
 import * as React from 'react';
+import rentService from "../../service/RentService/rentService";
 
 const customStyles = {
     content: {
@@ -17,7 +18,7 @@ const customStyles = {
 
 function RentVehicleModal(props) {
 
-
+    const [errorMessage, updateErrorMessage] = React.useState()
     const [formData, updateFormData] = React.useState({
         days: 1
     })
@@ -29,10 +30,16 @@ function RentVehicleModal(props) {
         })
     }
 
-    const onFormSubmit = (e) => {
+    const onFormSubmit = async (e) => {
         e.preventDefault();
         const days = formData.days
-        props.onRentVehicle(props.dynData.id.id, days);
+
+        const submit = await rentService.rentVehicle(props.dynData.id.id, days);
+        if(submit === "You can't rent this car"){
+            updateErrorMessage(submit);
+        }else{
+            window.location.href = "/vehicles"
+        }
     }
 
     function afterOpenModal(e) {
@@ -41,7 +48,16 @@ function RentVehicleModal(props) {
 
     function onModalClose(event) {
         let data = {name: 'example', type: 'closed from child'};
+        updateErrorMessage("")
         props.onCloseModal(event, data);
+    }
+
+
+    let infoAboutRent;
+    if(props.userDetails.numOfRents >= 5){
+        infoAboutRent = <h6>You will get 10% off because you are loyal user</h6>
+    }else{
+        infoAboutRent = <h6>You can't use the 10% off bonus, because you are not a loyal user.</h6>
     }
 
     return (
@@ -58,7 +74,11 @@ function RentVehicleModal(props) {
                     <hr/>
 
                     <h6>{"Rent for " + props.dynData.name.name + " " + props.dynData.brand.brand + " per day costs $" + props.dynData.price.amount}</h6>
+
                     <h6>How many days do you want to rent this car ?</h6>
+
+                    <hr/>
+
                     <form onSubmit={onFormSubmit}>
                         <div className={"row"}>
                             <div className={"col-md-3"}>
@@ -71,12 +91,16 @@ function RentVehicleModal(props) {
                                        onChange={handleChange}
                                 />
                             </div>
-                            <div class={"col-md-3"}>
+                            <div className={"col-md-3"}>
                                 <button id="submit" type="submit" className="btn btn-outline-dark">Rent</button>
                             </div>
 
                         </div>
+                        <hr/>
+                        <h6>Your balance: ${props.userDetails.money?.amount.toFixed(2)}</h6>
+                        {infoAboutRent}
                     </form>
+                    <h6>{errorMessage}</h6>
                     <div>
 
 

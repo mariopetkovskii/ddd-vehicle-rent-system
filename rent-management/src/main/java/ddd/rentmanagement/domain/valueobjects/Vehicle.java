@@ -9,7 +9,7 @@ import lombok.Getter;
 @Getter
 public class Vehicle implements ValueObject {
 
-    private final VehicleId id;
+    private final VehicleId vehicleId;
 
     private final Name name;
 
@@ -22,7 +22,7 @@ public class Vehicle implements ValueObject {
     private final Integer numOfRents;
 
     private Vehicle() {
-        this.id = VehicleId.randomId(VehicleId.class);
+        this.vehicleId = VehicleId.randomId(VehicleId.class);
         this.name = new Name();
         this.price = Money.valueOf(0);
         this.brand = new Brand();
@@ -38,7 +38,7 @@ public class Vehicle implements ValueObject {
             @JsonProperty("amount") Money price,
             @JsonProperty("type") Type type,
             @JsonProperty("numOfRents") Integer numOfRents) {
-        this.id = id;
+        this.vehicleId = id;
         this.name = name;
         this.price = price;
         this.brand = brand;

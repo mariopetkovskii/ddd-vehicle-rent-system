@@ -62,7 +62,7 @@ const header = (props) => {
                         </ul>
                         <ul className="nav navbar-nav navbar-right">
                             <li className="nav-item">
-                                <a href="/add-money" className="nav-link" style={{color: "black"}}>${props.userDetails.money?.amount}</a>
+                                <a href="/add-money" className="nav-link" style={{color: "black"}}>${props.userDetails.money?.amount.toFixed(2)}</a>
                             </li>
                             <li className="nav-item">
                                 <a href="/account" className="nav-link" style={{color: "black"}}>

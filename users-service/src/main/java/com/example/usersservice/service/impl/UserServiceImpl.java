@@ -87,7 +87,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> rentCar(RentCarDto rentCarDto) {
         User user = this.userRepository.findByEmail(rentCarDto.getEmail());
-        user.setMoney(new Money(user.getMoney().getAmount() - Double.parseDouble(rentCarDto.getAmount())));
+        if(user.getNumberOfRents() >= 5){
+            user.setMoney(new Money(user.getMoney().getAmount() - Double.parseDouble(rentCarDto.getAmount()) * 0.9));
+        }else {
+            user.setMoney(new Money(user.getMoney().getAmount() - Double.parseDouble(rentCarDto.getAmount())));
+        }
         return Optional.of(this.userRepository.save(user));
     }
 }

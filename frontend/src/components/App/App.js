@@ -33,7 +33,10 @@ class App extends Component {
                 />
                 <div className={"container"}>
                     <Routes>
-                        <Route path={"/vehicles"} exact element={<Vehicle onAddVehicle={this.addVehicle} onRent={this.rentVehicle}/>}/>
+                        <Route path={"/vehicles"} exact element={<Vehicle onAddVehicle={this.addVehicle}
+                                                                          onRent={this.rentVehicle}
+                                                                          userDetails={this.state.userDetails}
+                                                                          isLoggedIn={this.state.isUserLoggedIn}/>}/>
                         <Route path={"/register"} exact element={<Registration onRegister={this.register}/>}/>
                         <Route path={"/login"} exact element={<Login onLogin={this.login}/>}/>
                         <Route path={"/account"} exact element={<Account userDetails={this.state.userDetails}/>}/>
@@ -55,8 +58,8 @@ class App extends Component {
             });
     }
 
-    addVehicle = (name, brand, price, type) => {
-        vehicleService.addVehicle(name, brand, price, type)
+    addVehicle = (name, brand, price, type, numOfRents) => {
+        vehicleService.addVehicle(name, brand, price, type, numOfRents)
             .then(() => {
                 window.location.href = "/vehicles"
             })

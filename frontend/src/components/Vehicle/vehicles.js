@@ -3,6 +3,8 @@ import {useState} from 'react';
 import MaterialTable from 'material-table';
 import VehicleAddModal from "./vehicleAddModal";
 import RentVehicleModal from "./rentVehicleModal";
+import jwt_decode from "jwt-decode";
+import {useNavigate} from "react-router-dom";
 
 
 const Vehicle = (props) => {
@@ -13,6 +15,21 @@ const Vehicle = (props) => {
     const [modalIsOpenRent, setIsOpenRent] = React.useState(false);
     const [selectedRow, setSelectedRow] = useState(null);
     const [errorMessage, updateErrorMessage] = React.useState()
+    let addVehicle;
+
+    const token = localStorage.getItem("auth_token");
+    if (token !== null) {
+        const decoded_token = jwt_decode(token);
+        if (decoded_token.authority.includes('ROLE_ADMIN')) {
+            addVehicle = <div className="justify-content-end d-flex">
+                <button className={"btn btn-dark mt-2"}
+                        onClick={(openModal) => openModalAddVehicle(openModal)}>Add
+                    Vehicle
+                </button>
+            </div>
+        }
+    }
+    const history = useNavigate();
 
 
     function openModalAddVehicle(addVehicleModal) {
@@ -65,14 +82,16 @@ const Vehicle = (props) => {
     //         })
     // }
 
+
     return (
-            <div>
+        <div>
             <VehicleAddModal
                 dynData={openModal}
                 IsModalOpened={modalIsOpenAddVehicle}
                 onCloseModal={handleCloseModalAddVehicle}
                 onAfterOpen={handleAfterOpenAddVehicle}
                 onAddVehicle={props.onAddVehicle}
+                isLoggedIn={props.isLoggedIn}
             />
 
             <RentVehicleModal
@@ -81,16 +100,12 @@ const Vehicle = (props) => {
                 onCloseModal={handleCloseModalRent}
                 onOpenModal={handleAfterOpenRent}
                 onRentVehicle={props.onRent}
+                userDetails={props.userDetails}
             />
 
 
             <div className="container">
-                <div className="justify-content-end d-flex">
-                    <button className={"btn btn-dark mt-2"}
-                            onClick={(openModal) => openModalAddVehicle(openModal)}>Add
-                        Vehicle
-                    </button>
-                </div>
+                {addVehicle}
                 <div className="justify-content-center col-md-15 offset-sm-0 row-md-9 pt-2">
                     <MaterialTable
                         style={{
@@ -132,9 +147,9 @@ const Vehicle = (props) => {
                                 width: "7vh"
                             })
                         }}
-                        actions= {[
+                        actions={[
                             {
-                                icon: ()  => <button className={"btn btn-warning"}>Rent</button>,
+                                icon: () => <button className={"btn btn-warning"}>Rent</button>,
                                 tooltip: 'Open Details',
                                 onClick: (event, rowData) => openFromParent(rowData)
                             }]
