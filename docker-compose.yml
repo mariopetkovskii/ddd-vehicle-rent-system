@@ -43,3 +43,28 @@ services:
       KAFKA_ADVERTISED_HOST_NAME: localhost
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
 
+  users-service:
+    build: ./users-service
+    container_name: users-service_container
+    depends_on:
+      - kafka
+      - zookeeper
+      - users-system-db
+
+  rent-management:
+    build: ./rent-management
+    container_name: rent-management_container
+    depends_on:
+      - kafka
+      - zookeeper
+      - rent-management-db
+
+  vehicle-list:
+    build: ./vehicle-list
+    container_name: vehicle-list_container
+    depends_on:
+      - kafka
+      - zookeeper
+      - vehicle-db
+
+
