@@ -16,7 +16,7 @@ public class UserClient {
     private final String serverUrl;
 
     public UserClient(@Value("${app.users-service.url}") String serverUrl){
-        this.serverUrl = serverUrl;
+        this.serverUrl = "http://users-service";
         this.restTemplate = new RestTemplate();
         var requestFactory = new SimpleClientHttpRequestFactory();
         this.restTemplate.setRequestFactory(requestFactory);

@@ -22,7 +22,7 @@ public class VehicleClient {
     private final String serverUrl;
 
     public VehicleClient(@Value("${app.vehicle-list.url}") String serverUrl){
-        this.serverUrl = serverUrl;
+        this.serverUrl = "http://vehicle-list-service";
         this.restTemplate = new RestTemplate();
         var requestFactory = new SimpleClientHttpRequestFactory();
         this.restTemplate.setRequestFactory(requestFactory);
